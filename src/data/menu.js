@@ -60,6 +60,8 @@ const IMG = {
     'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=900&q=80',
   oven:
     'https://images.unsplash.com/photo-1548365328-8c6db3220e4c?auto=format&fit=crop&w=900&q=80',
+  seafood:
+    'https://images.pexels.com/photos/5639961/pexels-photo-5639961.jpeg?auto=compress&cs=tinysrgb&w=900',
   loaded:
     'https://images.unsplash.com/photo-1581873372796-635b67ca2008?auto=format&fit=crop&w=900&q=80',
   thin:
@@ -281,10 +283,10 @@ const PIZZA_ITEMS = [
     emoji: '🦐',
     badge: 'Premium',
     tags: ['spécial', 'poisson', 'premium'],
-    image: IMG.oven,
-    ingredients: ['Base creme citronnee', 'Mozzarella', 'Crevettes', 'Calamars', 'Ail', 'Persil'],
+    image: IMG.seafood,
+    ingredients: ['Sauce tomate', 'Mozzarella', 'Crevettes', 'Calamars', 'Poivrons', 'Oignons', 'Aneth'],
     description:
-      'Fruits de mer sautes a l ail, creme legere au citron. Une pizza de fete, parfumee et genereuse.',
+      'Pizza fruits de mer : crevettes, calamars et poisson sur mozzarella, avec poivrons colores. Une pizza de fete genereuse.',
   },
   {
     id: 'burrata',
