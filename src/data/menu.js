@@ -4,6 +4,8 @@ export const CATEGORIES = [
   { id: 'speciales', label: 'Spéciales', emoji: '🔥' },
   { id: 'vegetariennes', label: 'Végé', emoji: '🌿' },
   { id: 'sucrees', label: 'Sucrées', emoji: '🍫' },
+  { id: 'gazeuses', label: 'Gazeuses', emoji: '🥤' },
+  { id: 'eaux', label: 'Eaux', emoji: '💧' },
 ];
 
 export const SIZES = [
@@ -34,20 +36,32 @@ const IMG = {
     'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=900&q=80',
   sweet:
     'https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=900&q=80',
-  rustic:
-    'https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=900&q=80',
-  wood:
-    'https://images.unsplash.com/photo-1588315029754-2dd089d39a1a?auto=format&fit=crop&w=900&q=80',
-  slice:
-    'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=900&q=80',
-  oven:
-    'https://images.unsplash.com/photo-1548365328-8c6db3220e4c?auto=format&fit=crop&w=900&q=80',
+  cola:
+    'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80',
+  colaCan:
+    'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=900&q=80',
+  soda:
+    'https://images.unsplash.com/photo-1629203851122-3726ecdf080e?auto=format&fit=crop&w=900&q=80',
+  orange:
+    'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=900&q=80',
+  water:
+    'https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=900&q=80',
+  waterGlass:
+    'https://images.unsplash.com/photo-1559839914-17aae19cec71?auto=format&fit=crop&w=900&q=80',
+  sparkling:
+    'https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?auto=format&fit=crop&w=900&q=80',
+  bottle:
+    'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=900&q=80',
 };
 
 export const FALLBACK_PIZZA_IMAGE = IMG.cheese;
 
+function withKind(list, kind) {
+  return list.map((item) => ({ ...item, kind }));
+}
+
 /** Prix de base en TND (taille M). discountPct = remise produit. */
-export const PIZZAS = [
+const PIZZA_ITEMS = [
   {
     id: 'margherita',
     name: 'Margherita',
@@ -210,6 +224,186 @@ export const PIZZAS = [
   },
 ];
 
+export const PIZZAS = withKind(PIZZA_ITEMS, 'pizza');
+
+const DRINK_ITEMS = [
+  {
+    id: 'coca-33',
+    name: 'Coca-Cola 33 cl',
+    category: 'gazeuses',
+    price: 3.5,
+    discountPct: 0,
+    rating: 4.7,
+    prepMin: 1,
+    emoji: '🥤',
+    badge: null,
+    volume: '33 cl',
+    tags: ['gazeuse', 'cola', 'boisson'],
+    image: IMG.colaCan,
+    ingredients: ['Eau gazéifiée', 'Sucre', 'Colorant caramel', 'Caféine', 'Arômes'],
+    description:
+      'Boisson gazeuse cola glacée, format canette 33 cl. Le classique pour accompagner une pizza.',
+  },
+  {
+    id: 'coca-15',
+    name: 'Coca-Cola 1,5 L',
+    category: 'gazeuses',
+    price: 6,
+    discountPct: 5,
+    rating: 4.6,
+    prepMin: 1,
+    emoji: '🥤',
+    badge: '-5%',
+    volume: '1,5 L',
+    tags: ['gazeuse', 'cola', 'famille'],
+    image: IMG.cola,
+    ingredients: ['Eau gazéifiée', 'Sucre', 'Colorant caramel', 'Caféine', 'Arômes'],
+    description:
+      'Grande bouteille 1,5 L de Coca-Cola — idéale pour partager à table avec un pack famille.',
+  },
+  {
+    id: 'fanta-33',
+    name: 'Fanta Orange 33 cl',
+    category: 'gazeuses',
+    price: 3.5,
+    discountPct: 0,
+    rating: 4.5,
+    prepMin: 1,
+    emoji: '🍊',
+    badge: null,
+    volume: '33 cl',
+    tags: ['gazeuse', 'orange', 'boisson'],
+    image: IMG.orange,
+    ingredients: ['Eau gazéifiée', 'Jus d\'orange', 'Sucre', 'Arômes naturels', 'Acide citrique'],
+    description:
+      'Gazeuse orange fruitée et pétillante, format 33 cl. Fraîcheur acidulée avec les pizzas épicées.',
+  },
+  {
+    id: 'sprite-33',
+    name: 'Sprite 33 cl',
+    category: 'gazeuses',
+    price: 3.5,
+    discountPct: 0,
+    rating: 4.4,
+    prepMin: 1,
+    emoji: '🍋',
+    badge: null,
+    volume: '33 cl',
+    tags: ['gazeuse', 'citron', 'boisson'],
+    image: IMG.soda,
+    ingredients: ['Eau gazéifiée', 'Sucre', 'Arômes citron-lime', 'Acide citrique'],
+    description:
+      'Boisson gazeuse citron-lime, goût léger et rafraîchissant. Parfaite après une Diavola.',
+  },
+  {
+    id: 'boga-33',
+    name: 'Boga Cidre 33 cl',
+    category: 'gazeuses',
+    price: 3.2,
+    discountPct: 0,
+    rating: 4.6,
+    prepMin: 1,
+    emoji: '🍎',
+    badge: 'Local',
+    volume: '33 cl',
+    tags: ['gazeuse', 'local', 'boisson'],
+    image: IMG.soda,
+    ingredients: ['Eau gazéifiée', 'Arôme pomme', 'Sucre', 'Acide citrique'],
+    description:
+      'Gazeuse tunisienne au goût cidre/pomme. Un choix local pour accompagner vos pizzas.',
+  },
+  {
+    id: 'schweppes-33',
+    name: 'Schweppes Citron 33 cl',
+    category: 'gazeuses',
+    price: 3.8,
+    discountPct: 0,
+    rating: 4.5,
+    prepMin: 1,
+    emoji: '🍋',
+    badge: null,
+    volume: '33 cl',
+    tags: ['gazeuse', 'citron', 'premium'],
+    image: IMG.orange,
+    ingredients: ['Eau gazéifiée', 'Arômes citron', 'Sucre', 'Quinine'],
+    description:
+      'Schweppes citron pétillant, notes amères légères. Excellent avec les fromages et la Truffe.',
+  },
+  {
+    id: 'eau-plate-50',
+    name: 'Eau minérale plate 50 cl',
+    category: 'eaux',
+    price: 1.5,
+    discountPct: 0,
+    rating: 4.3,
+    prepMin: 1,
+    emoji: '💧',
+    badge: null,
+    volume: '50 cl',
+    tags: ['eau', 'plate', 'minérale'],
+    image: IMG.water,
+    ingredients: ['Eau minérale naturelle'],
+    description:
+      'Eau minérale naturelle plate, bouteille 50 cl. Hydratation pure pendant le repas.',
+  },
+  {
+    id: 'eau-plate-15',
+    name: 'Eau minérale plate 1,5 L',
+    category: 'eaux',
+    price: 2.5,
+    discountPct: 0,
+    rating: 4.4,
+    prepMin: 1,
+    emoji: '💧',
+    badge: null,
+    volume: '1,5 L',
+    tags: ['eau', 'plate', 'famille'],
+    image: IMG.bottle,
+    ingredients: ['Eau minérale naturelle'],
+    description:
+      'Grande bouteille d\'eau minérale plate 1,5 L — format table / famille.',
+  },
+  {
+    id: 'eau-gazeuse-50',
+    name: 'Eau minérale gazeuse 50 cl',
+    category: 'eaux',
+    price: 2,
+    discountPct: 0,
+    rating: 4.5,
+    prepMin: 1,
+    emoji: '🫧',
+    badge: null,
+    volume: '50 cl',
+    tags: ['eau', 'gazeuse', 'minérale'],
+    image: IMG.sparkling,
+    ingredients: ['Eau minérale naturelle', 'Gaz carbonique'],
+    description:
+      'Eau minérale naturellement ou légèrement gazeifiée, 50 cl. Digestion légère après pizza.',
+  },
+  {
+    id: 'eau-gazeuse-15',
+    name: 'Eau minérale gazeuse 1,5 L',
+    category: 'eaux',
+    price: 3,
+    discountPct: 0,
+    rating: 4.4,
+    prepMin: 1,
+    emoji: '🫧',
+    badge: null,
+    volume: '1,5 L',
+    tags: ['eau', 'gazeuse', 'famille'],
+    image: IMG.waterGlass,
+    ingredients: ['Eau minérale naturelle', 'Gaz carbonique'],
+    description:
+      'Eau minérale gazeuse 1,5 L pour partager. Fraîcheur pétillante sans sucre.',
+  },
+];
+
+export const DRINKS = withKind(DRINK_ITEMS, 'drink');
+
+/** Catalogue complet (pizzas + boissons). */
+export const CATALOG = [...PIZZAS, ...DRINKS];
+
 export const PACKS = [
   {
     id: 'pack-duo',
@@ -315,38 +509,59 @@ export function getPizza(id) {
   return PIZZAS.find((p) => p.id === id);
 }
 
+export function getProduct(id) {
+  return CATALOG.find((p) => p.id === id);
+}
+
 export function getOfferByCode(code) {
   if (!code) return null;
   return OFFERS.find((o) => o.code.toUpperCase() === code.trim().toUpperCase()) || null;
 }
 
-export function finalPrice(pizza, sizeId = 'M') {
+export function finalPrice(product, sizeId = 'M') {
+  if (product.kind === 'drink') {
+    const discounted = product.price * (1 - (product.discountPct || 0) / 100);
+    return Math.round(discounted * 100) / 100;
+  }
   const size = SIZES.find((s) => s.id === sizeId) || SIZES[1];
-  const base = pizza.price * size.multiplier;
-  const discounted = base * (1 - (pizza.discountPct || 0) / 100);
+  const base = product.price * size.multiplier;
+  const discounted = base * (1 - (product.discountPct || 0) / 100);
   return Math.round(discounted * 100) / 100;
 }
 
-export function listPrice(pizza, sizeId = 'M') {
+export function listPrice(product, sizeId = 'M') {
+  if (product.kind === 'drink') {
+    return Math.round(product.price * 100) / 100;
+  }
   const size = SIZES.find((s) => s.id === sizeId) || SIZES[1];
-  return Math.round(pizza.price * size.multiplier * 100) / 100;
+  return Math.round(product.price * size.multiplier * 100) / 100;
 }
 
-export function getRecommendations(pizza, limit = 4) {
-  if (!pizza) {
-    return [...PIZZAS].sort((a, b) => b.rating - a.rating).slice(0, limit);
+export function getRecommendations(product, limit = 4) {
+  const pool =
+    product?.kind === 'drink'
+      ? DRINKS
+      : product?.kind === 'pizza'
+        ? [...PIZZAS, ...DRINKS.filter((d) => d.category === 'gazeuses').slice(0, 2)]
+        : PIZZAS;
+
+  if (!product) {
+    return [...pool].sort((a, b) => b.rating - a.rating).slice(0, limit);
   }
-  const scored = PIZZAS.filter((p) => p.id !== pizza.id).map((p) => {
-    let score = 0;
-    if (p.category === pizza.category) score += 3;
-    const shared = (p.tags || []).filter((t) => (pizza.tags || []).includes(t));
-    score += shared.length * 2;
-    if (p.discountPct > 0) score += 1;
-    score += p.rating;
-    return { pizza: p, score };
-  });
+  const scored = pool
+    .filter((p) => p.id !== product.id)
+    .map((p) => {
+      let score = 0;
+      if (p.category === product.category) score += 3;
+      if (p.kind === product.kind) score += 2;
+      const shared = (p.tags || []).filter((t) => (product.tags || []).includes(t));
+      score += shared.length * 2;
+      if (p.discountPct > 0) score += 1;
+      score += p.rating;
+      return { product: p, score };
+    });
   scored.sort((a, b) => b.score - a.score);
-  return scored.slice(0, limit).map((s) => s.pizza);
+  return scored.slice(0, limit).map((s) => s.product);
 }
 
 export function getTopRated(limit = 5) {
@@ -357,4 +572,11 @@ export function getDealPizzas() {
   return PIZZAS.filter((p) => p.discountPct > 0).sort(
     (a, b) => b.discountPct - a.discountPct
   );
+}
+
+export function getDrinksByCategory(category) {
+  if (category === 'gazeuses' || category === 'eaux') {
+    return DRINKS.filter((d) => d.category === category);
+  }
+  return DRINKS;
 }

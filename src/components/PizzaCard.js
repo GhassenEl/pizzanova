@@ -37,6 +37,10 @@ export default function PizzaCard({ pizza, index = 0, onPress, compact }) {
   const was = listPrice(pizza);
   const hasDiscount = pizza.discountPct > 0;
   const ingredientsLine = (pizza.ingredients || []).slice(0, 3).join(', ');
+  const subtitle =
+    pizza.kind === 'drink'
+      ? pizza.volume || ingredientsLine
+      : ingredientsLine;
 
   if (compact) {
     return (

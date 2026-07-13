@@ -19,7 +19,8 @@ import PizzaCard from '../components/PizzaCard';
 import PizzaImage from '../components/PizzaImage';
 
 export default function ProductDetailScreen({ pizza, onBack, onOpenPizza }) {
-  const { addPizza } = useCart();
+  const { addPizza, addDrink } = useCart();
+  const isDrink = pizza.kind === 'drink';
   const [sizeId, setSizeId] = useState('M');
   const [added, setAdded] = useState(false);
   const slide = useRef(new Animated.Value(40)).current;
@@ -61,7 +62,11 @@ export default function ProductDetailScreen({ pizza, onBack, onOpenPizza }) {
   );
 
   const handleAdd = () => {
-    addPizza({ ...pizza, _unitPrice: price }, sizeId, 1);
+    if (isDrink) {
+      addDrink({ ...pizza, _unitPrice: price }, 1);
+    } else {
+      addPizza({ ...pizza, _unitPrice: price }, sizeId, 1);
+    }
     setAdded(true);
     Animated.sequence([
       Animated.spring(btnScale, {
@@ -93,7 +98,10 @@ export default function ProductDetailScreen({ pizza, onBack, onOpenPizza }) {
 
         <Text style={styles.name}>{pizza.name}</Text>
         <Text style={styles.meta}>
-          ★ {pizza.rating} · {pizza.prepMin} min · {pizza.category}
+          ★ {pizza.rating}
+          {isDrink
+            ? ` · ${pizza.volume} · ${pizza.category}`
+            : ` · ${pizza.prepMin} min · ${pizza.category}`}
         </Text>
 
         <Text style={styles.section}>Description</Text>
@@ -108,38 +116,51 @@ export default function ProductDetailScreen({ pizza, onBack, onOpenPizza }) {
           </View>
         ) : null}
 
-        <Text style={styles.section}>Ingrédients</Text>
+        <Text style={styles.section}>
+          {isDrink ? 'Composition' : 'Ingredients'}
+        </Text>
         <Text style={styles.ingList}>
           {(pizza.ingredients || []).join(', ')}
         </Text>
         <View style={styles.tags}>
-          {pizza.ingredients.map((ing) => (
+          {(pizza.ingredients || []).map((ing) => (
             <View key={ing} style={styles.tag}>
               <Text style={styles.tagText}>{ing}</Text>
             </View>
           ))}
         </View>
 
-        <Text style={styles.section}>Taille</Text>
-        <View style={styles.sizes}>
-          {SIZES.map((s) => {
-            const active = sizeId === s.id;
-            return (
-              <Pressable
-                key={s.id}
-                onPress={() => setSizeId(s.id)}
-                style={[styles.size, active && styles.sizeActive]}
-              >
-                <Text style={[styles.sizeId, active && styles.sizeIdActive]}>
-                  {s.id}
-                </Text>
-                <Text style={[styles.sizeLabel, active && styles.sizeIdActive]}>
-                  {s.label}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
+        {!isDrink ? (
+          <>
+            <Text style={styles.section}>Taille</Text>
+            <View style={styles.sizes}>
+              {SIZES.map((s) => {
+                const active = sizeId === s.id;
+                return (
+                  <Pressable
+                    key={s.id}
+                    onPress={() => setSizeId(s.id)}
+                    style={[styles.size, active && styles.sizeActive]}
+                  >
+                    <Text style={[styles.sizeId, active && styles.sizeIdActive]}>
+                      {s.id}
+                    </Text>
+                    <Text
+                      style={[styles.sizeLabel, active && styles.sizeIdActive]}
+                    >
+                      {s.label}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </>
+        ) : (
+          <View style={styles.volumeBox}>
+            <Text style={styles.volumeLabel}>Format</Text>
+            <Text style={styles.volumeValue}>{pizza.volume}</Text>
+          </View>
+        )}
 
         <View style={styles.priceBox}>
           <View>
@@ -151,7 +172,7 @@ export default function ProductDetailScreen({ pizza, onBack, onOpenPizza }) {
           <Animated.View style={{ transform: [{ scale: btnScale }] }}>
             <Pressable style={styles.btn} onPress={handleAdd}>
               <Text style={styles.btnText}>
-                {added ? '✓ Ajouté' : 'Ajouter au panier'}
+                {added ? '✓ Ajoute' : 'Ajouter au panier'}
               </Text>
             </Pressable>
           </Animated.View>
@@ -254,6 +275,17 @@ const styles = StyleSheet.create({
   sizeId: { color: colors.muted, fontWeight: '900', fontSize: 18 },
   sizeIdActive: { color: colors.cream },
   sizeLabel: { color: colors.muted, fontSize: 11, marginTop: 2 },
+  volumeBox: {
+    marginTop: spacing.md,
+    backgroundColor: colors.card,
+    borderRadius: 14,
+    padding: spacing.md,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  volumeLabel: { color: colors.muted, fontWeight: '600' },
+  volumeValue: { color: colors.cream, fontWeight: '900', fontSize: 18 },
   tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   tag: {
     backgroundColor: colors.bgSoft,

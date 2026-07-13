@@ -72,6 +72,7 @@ export default function CartScreen({ onBack, onCheckout }) {
                   <Text style={styles.name}>
                     {item.name}
                     {item.sizeId ? ` · ${item.sizeId}` : ''}
+                    {item.volume ? ` · ${item.volume}` : ''}
                   </Text>
                   <Text style={styles.meta}>
                     {item.qty} × {item.unitPrice.toFixed(2)} TND

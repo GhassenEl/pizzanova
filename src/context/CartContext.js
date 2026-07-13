@@ -44,6 +44,32 @@ export function CartProvider({ children }) {
     });
   };
 
+  const addDrink = (drink, qty = 1) => {
+    const key = `drink:${drink.id}`;
+    setItems((prev) => {
+      const existing = prev.find((i) => i.key === key);
+      if (existing) {
+        return prev.map((i) =>
+          i.key === key ? { ...i, qty: i.qty + qty } : i
+        );
+      }
+      return [
+        ...prev,
+        {
+          key,
+          type: 'drink',
+          id: drink.id,
+          name: drink.name,
+          volume: drink.volume,
+          emoji: drink.emoji,
+          image: drink.image,
+          unitPrice: drink._unitPrice,
+          qty,
+        },
+      ];
+    });
+  };
+
   const addPack = (pack) => {
     const key = `pack:${pack.id}`;
     setItems((prev) => {
@@ -178,6 +204,7 @@ export function CartProvider({ children }) {
     () => ({
       items,
       addPizza,
+      addDrink,
       addPack,
       removeItem,
       clear,

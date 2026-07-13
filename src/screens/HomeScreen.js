@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 import {
   CATEGORIES,
+  CATALOG,
   PIZZAS,
+  DRINKS,
   OFFERS,
   getTopRated,
   getDealPizzas,
@@ -47,19 +49,30 @@ export default function HomeScreen({
     ]).start();
   }, [brandOpacity, brandY]);
 
-  const pizzas = useMemo(() => {
-    if (category === 'all') return PIZZAS;
+  const products = useMemo(() => {
+    if (category === 'all') return CATALOG;
+    if (category === 'gazeuses' || category === 'eaux') {
+      return DRINKS.filter((d) => d.category === category);
+    }
     return PIZZAS.filter((p) => p.category === category);
   }, [category]);
 
   const recommended = useMemo(() => getTopRated(5), []);
   const deals = useMemo(() => getDealPizzas(), []);
   const highlightOffer = OFFERS[0];
+  const menuTitle =
+    category === 'gazeuses'
+      ? 'Boissons gazeuses'
+      : category === 'eaux'
+        ? 'Eaux minerales'
+        : category === 'all'
+          ? 'Menu'
+          : 'Pizzas';
 
   return (
     <View style={styles.root}>
       <FlatList
-        data={pizzas}
+        data={products}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
@@ -75,7 +88,7 @@ export default function HomeScreen({
                 <View>
                   <Text style={styles.brand}>PizzaNova</Text>
                   <Text style={styles.tagline}>
-                    Commande · paiement · offres
+                    Pizzas · boissons · offres
                   </Text>
                 </View>
                 <View style={styles.heroActions}>
@@ -106,25 +119,48 @@ export default function HomeScreen({
               </Pressable>
 
               <View style={styles.quickRow}>
-                <Pressable style={styles.quick} onPress={onOpenOffers}>
-                  <Text style={styles.quickText}>🔥 Offres</Text>
+                <Pressable
+                  style={styles.quick}
+                  onPress={() => setCategory('gazeuses')}
+                >
+                  <Text style={styles.quickText}>🥤 Gazeuses</Text>
+                </Pressable>
+                <Pressable
+                  style={styles.quick}
+                  onPress={() => setCategory('eaux')}
+                >
+                  <Text style={styles.quickText}>💧 Eaux</Text>
                 </Pressable>
                 <Pressable style={styles.quick} onPress={onOpenPacks}>
                   <Text style={styles.quickText}>🎁 Packs</Text>
                 </Pressable>
-                <Pressable style={styles.quick} onPress={onOpenOrders}>
-                  <Text style={styles.quickText}>📦 Commandes</Text>
-                </Pressable>
               </View>
             </Animated.View>
 
-            <Text style={styles.section}>Recommandées pour vous</Text>
+            <Text style={styles.section}>Recommandees pour vous</Text>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.recoRow}
             >
               {recommended.map((p, i) => (
+                <PizzaCard
+                  key={p.id}
+                  pizza={p}
+                  index={i}
+                  compact
+                  onPress={() => onOpenPizza(p)}
+                />
+              ))}
+            </ScrollView>
+
+            <Text style={styles.section}>Boissons populaires</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.recoRow}
+            >
+              {DRINKS.slice(0, 6).map((p, i) => (
                 <PizzaCard
                   key={p.id}
                   pizza={p}
@@ -183,7 +219,7 @@ export default function HomeScreen({
               })}
             </ScrollView>
 
-            <Text style={[styles.section, { marginTop: 4 }]}>Menu</Text>
+            <Text style={[styles.section, { marginTop: 4 }]}>{menuTitle}</Text>
           </View>
         }
         renderItem={({ item, index }) => (
