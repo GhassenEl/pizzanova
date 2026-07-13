@@ -12,6 +12,40 @@ export const SIZES = [
   { id: 'L', label: 'Grande', multiplier: 1.35 },
 ];
 
+/** Images Unsplash vérifiées HTTP 200 (juillet 2026). */
+const IMG = {
+  margherita:
+    'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80',
+  pepperoni:
+    'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80',
+  cheese:
+    'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
+  spicy:
+    'https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=900&q=80',
+  gourmet:
+    'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80',
+  whole:
+    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80',
+  veggie:
+    'https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=80',
+  funghi:
+    'https://images.unsplash.com/photo-1458642849426-cfb724f15ef7?auto=format&fit=crop&w=900&q=80',
+  dessert:
+    'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=900&q=80',
+  sweet:
+    'https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=900&q=80',
+  rustic:
+    'https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=900&q=80',
+  wood:
+    'https://images.unsplash.com/photo-1588315029754-2dd089d39a1a?auto=format&fit=crop&w=900&q=80',
+  slice:
+    'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=900&q=80',
+  oven:
+    'https://images.unsplash.com/photo-1548365328-8c6db3220e4c?auto=format&fit=crop&w=900&q=80',
+};
+
+export const FALLBACK_PIZZA_IMAGE = IMG.cheese;
+
 /** Prix de base en TND (taille M). discountPct = remise produit. */
 export const PIZZAS = [
   {
@@ -25,10 +59,10 @@ export const PIZZAS = [
     emoji: '🍅',
     badge: null,
     tags: ['classique', 'fromage', 'tomate'],
-    image:
-      'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80',
-    ingredients: ['Sauce tomate', 'Mozzarella', 'Basilic frais', "Huile d'olive"],
-    description: 'La reine des classiques — simple, fondante, authentique.',
+    image: IMG.margherita,
+    ingredients: ['Sauce tomate San Marzano', 'Mozzarella fior di latte', 'Basilic frais', "Huile d'olive"],
+    description:
+      'Pizza napolitaine traditionnelle : pâte fine, sauce tomate douce, mozzarella fondante et basilic frais. Idéale pour les puristes.',
   },
   {
     id: 'pepperoni',
@@ -41,10 +75,10 @@ export const PIZZAS = [
     emoji: '🌶️',
     badge: '-10%',
     tags: ['classique', 'viande', 'épicé'],
-    image:
-      'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80',
-    ingredients: ['Sauce tomate', 'Mozzarella', 'Pepperoni', 'Origan'],
-    description: 'Croûte croustillante, pepperoni grillé et fromage filandreux.',
+    image: IMG.pepperoni,
+    ingredients: ['Sauce tomate', 'Mozzarella', 'Pepperoni grillé', 'Origan', 'Huile pimentée'],
+    description:
+      'Croûte croustillante garnie de pepperoni légèrement grillé, mozzarella filandreuse et une touche d’origan. Classique indémodable.',
   },
   {
     id: 'quatre-fromages',
@@ -57,10 +91,10 @@ export const PIZZAS = [
     emoji: '🧀',
     badge: null,
     tags: ['classique', 'fromage', 'crème'],
-    image:
-      'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
-    ingredients: ['Mozzarella', 'Gorgonzola', 'Chèvre', 'Parmesan', 'Crème'],
-    description: 'Quatuor crémeux pour les fans de fromage.',
+    image: IMG.cheese,
+    ingredients: ['Base crème', 'Mozzarella', 'Gorgonzola', 'Chèvre', 'Parmesan'],
+    description:
+      'Base crème onctueuse et quatuor de fromages (mozzarella, gorgonzola, chèvre, parmesan) pour un goût riche et fondant.',
   },
   {
     id: 'diavola',
@@ -73,10 +107,10 @@ export const PIZZAS = [
     emoji: '😈',
     badge: '-15%',
     tags: ['épicé', 'viande', 'spécial'],
-    image:
-      'https://images.unsplash.com/photo-1604382355076-af4b0eb75b4a?auto=format&fit=crop&w=900&q=80',
-    ingredients: ['Sauce tomate piquante', 'Mozzarella', 'Salami épicé', 'Piments', 'Miel'],
-    description: 'Feu contrôlé — piquant, sucré, addictif.',
+    image: IMG.spicy,
+    ingredients: ['Sauce tomate piquante', 'Mozzarella', 'Salami épicé', 'Piments frais', 'Filet de miel'],
+    description:
+      'Version diabolique : salami épicé, piments et sauce tomate relevée, équilibrée par un filet de miel. Pour les amateurs de feu.',
   },
   {
     id: 'truffe',
@@ -89,10 +123,10 @@ export const PIZZAS = [
     emoji: '✨',
     badge: 'Premium',
     tags: ['premium', 'champignon', 'crème'],
-    image:
-      'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80',
-    ingredients: ['Crème', 'Mozzarella', 'Champignons', 'Huile de truffe', 'Parmesan'],
-    description: 'Signature PizzaNova — parfum de truffe, texture soyeuse.',
+    image: IMG.gourmet,
+    ingredients: ['Crème fraîche', 'Mozzarella', 'Champignons sautés', 'Huile de truffe', 'Copeaux de parmesan'],
+    description:
+      'Signature PizzaNova : crème, champignons dorés et huile de truffe blanche. Texture soyeuse, arôme intense — portion premium.',
   },
   {
     id: 'bbq-chicken',
@@ -105,10 +139,10 @@ export const PIZZAS = [
     emoji: '🍗',
     badge: '-20%',
     tags: ['viande', 'bbq', 'spécial'],
-    image:
-      'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80',
-    ingredients: ['Sauce BBQ', 'Poulet grillé', 'Oignons rouges', 'Mozzarella', 'Coriandre'],
-    description: 'Saveurs smokehouse sur pâte napolitaine.',
+    image: IMG.whole,
+    ingredients: ['Sauce BBQ fumée', 'Poulet grillé', 'Oignons rouges', 'Mozzarella', 'Coriandre fraîche'],
+    description:
+      'Poulet mariné grillé, sauce barbecue fumée, oignons rouges et mozzarella. Saveurs smokehouse sur pâte napolitaine.',
   },
   {
     id: 'veggie-garden',
@@ -121,10 +155,10 @@ export const PIZZAS = [
     emoji: '🥗',
     badge: '-5%',
     tags: ['végé', 'légumes', 'léger'],
-    image:
-      'https://images.unsplash.com/photo-1571407970349-bc81e7e96d5b?auto=format&fit=crop&w=900&q=80',
-    ingredients: ['Sauce tomate', 'Courgettes', 'Poivrons', 'Olives', 'Roquette'],
-    description: 'Légumes grillés, fraîcheur et croquant.',
+    image: IMG.veggie,
+    ingredients: ['Sauce tomate', 'Courgettes grillées', 'Poivrons', 'Olives noires', 'Roquette'],
+    description:
+      'Légumes de saison grillés (courgettes, poivrons), olives et roquette croquante sur sauce tomate légère. Fraîche et colorée.',
   },
   {
     id: 'funghi',
@@ -137,10 +171,10 @@ export const PIZZAS = [
     emoji: '🍄',
     badge: null,
     tags: ['végé', 'champignon', 'crème'],
-    image:
-      'https://images.unsplash.com/photo-1458642849426-cfb724f15ef7?auto=format&fit=crop&w=900&q=80',
-    ingredients: ['Crème', 'Champignons', 'Ail', 'Mozzarella', 'Persil'],
-    description: 'Forestière douce, parfaite en semaine.',
+    image: IMG.funghi,
+    ingredients: ['Base crème', 'Champignons de Paris', 'Ail confit', 'Mozzarella', 'Persil plat'],
+    description:
+      'Forestière douce : crème à l’ail, champignons sautés et mozzarella. Parfaite en semaine, réconfortante sans être lourde.',
   },
   {
     id: 'nutella',
@@ -153,10 +187,10 @@ export const PIZZAS = [
     emoji: '🍌',
     badge: '-10%',
     tags: ['dessert', 'chocolat', 'sucré'],
-    image:
-      'https://images.unsplash.com/photo-1620374645498-af6bd681a0bd?auto=format&fit=crop&w=900&q=80',
-    ingredients: ['Nutella', 'Banane', 'Noisettes', 'Sucre glace'],
-    description: 'Dessert partageable — croûte chaude, cœur fondant.',
+    image: IMG.dessert,
+    ingredients: ['Pâte à pizza sucrée', 'Nutella', 'Banane fraîche', 'Noisettes concassées', 'Sucre glace'],
+    description:
+      'Dessert partageable : croûte chaude, généreux Nutella, rondelles de banane et noisettes croquantes. Saupoudrée de sucre glace.',
   },
   {
     id: 'oreo',
@@ -169,10 +203,10 @@ export const PIZZAS = [
     emoji: '🍪',
     badge: 'Nouveau',
     tags: ['dessert', 'chocolat', 'sucré'],
-    image:
-      'https://images.unsplash.com/photo-1594007654729-407eedc4be64?auto=format&fit=crop&w=900&q=80',
-    ingredients: ['Crème pâtissière', 'Cookies', 'Chocolat noir', 'Coulis'],
-    description: 'Enfant gourmand version pizza.',
+    image: IMG.sweet,
+    ingredients: ['Crème pâtissière', 'Cookies écrasés', 'Chocolat noir fondu', 'Coulis caramel'],
+    description:
+      'Pizza dessert gourmande : crème pâtissière, cookies croustillants, chocolat noir et filet de caramel. Version enfant (et adulte) gourmand.',
   },
 ];
 
@@ -181,8 +215,7 @@ export const PACKS = [
     id: 'pack-duo',
     name: 'Pack Duo',
     emoji: '💑',
-    image:
-      'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
+    image: IMG.cheese,
     pizzas: ['margherita', 'pepperoni'],
     drinks: 2,
     price: 48,
@@ -194,8 +227,7 @@ export const PACKS = [
     id: 'pack-family',
     name: 'Pack Famille',
     emoji: '👨‍👩‍👧‍👦',
-    image:
-      'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80',
+    image: IMG.whole,
     pizzas: ['margherita', 'pepperoni', 'veggie-garden', 'quatre-fromages'],
     drinks: 4,
     price: 89,
@@ -207,8 +239,7 @@ export const PACKS = [
     id: 'pack-party',
     name: 'Pack Party',
     emoji: '🎉',
-    image:
-      'https://images.unsplash.com/photo-1604382355076-af4b0eb75b4a?auto=format&fit=crop&w=900&q=80',
+    image: IMG.spicy,
     pizzas: ['diavola', 'truffe', 'bbq-chicken', 'funghi', 'nutella'],
     drinks: 6,
     price: 149,
@@ -220,8 +251,7 @@ export const PACKS = [
     id: 'pack-veggie',
     name: 'Pack Vert',
     emoji: '🌱',
-    image:
-      'https://images.unsplash.com/photo-1571407970349-bc81e7e96d5b?auto=format&fit=crop&w=900&q=80',
+    image: IMG.veggie,
     pizzas: ['veggie-garden', 'funghi', 'quatre-fromages'],
     drinks: 3,
     price: 62,
@@ -231,7 +261,6 @@ export const PACKS = [
   },
 ];
 
-/** Offres promo (codes + banners). */
 export const OFFERS = [
   {
     id: 'flash-midi',
@@ -242,8 +271,7 @@ export const OFFERS = [
     value: 15,
     minOrder: 25,
     color: '#E85D04',
-    image:
-      'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80',
+    image: IMG.margherita,
   },
   {
     id: 'livraison',
@@ -254,8 +282,7 @@ export const OFFERS = [
     value: 5,
     minOrder: 40,
     color: '#2A9D8F',
-    image:
-      'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80',
+    image: IMG.whole,
   },
   {
     id: 'weekend',
@@ -266,8 +293,7 @@ export const OFFERS = [
     value: 8,
     minOrder: 50,
     color: '#FFB703',
-    image:
-      'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80',
+    image: IMG.pepperoni,
   },
   {
     id: 'nouveau',
@@ -278,8 +304,7 @@ export const OFFERS = [
     value: 20,
     minOrder: 20,
     color: '#E63946',
-    image:
-      'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80',
+    image: IMG.gourmet,
   },
 ];
 
@@ -307,7 +332,6 @@ export function listPrice(pizza, sizeId = 'M') {
   return Math.round(pizza.price * size.multiplier * 100) / 100;
 }
 
-/** Recommandations : même catégorie / tags, puis meilleures notes. */
 export function getRecommendations(pizza, limit = 4) {
   if (!pizza) {
     return [...PIZZAS].sort((a, b) => b.rating - a.rating).slice(0, limit);

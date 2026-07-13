@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Animated,
   FlatList,
-  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -19,6 +18,7 @@ import {
 import { colors, spacing } from '../theme';
 import { useCart } from '../context/CartContext';
 import PizzaCard from '../components/PizzaCard';
+import PizzaImage from '../components/PizzaImage';
 
 export default function HomeScreen({
   onOpenPizza,
@@ -94,9 +94,9 @@ export default function HomeScreen({
               </View>
 
               <Pressable style={styles.offerBanner} onPress={onOpenOffers}>
-                <Image
-                  source={{ uri: highlightOffer.image }}
-                  style={styles.offerImg}
+                <PizzaImage
+                  uri={highlightOffer.image}
+                  style={StyleSheet.absoluteFill}
                 />
                 <View style={styles.offerOverlay}>
                   <Text style={styles.offerTitle}>{highlightOffer.title}</Text>
@@ -250,9 +250,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: colors.card,
   },
-  offerImg: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
   offerOverlay: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(26,15,10,0.55)',
     justifyContent: 'flex-end',
     padding: spacing.md,

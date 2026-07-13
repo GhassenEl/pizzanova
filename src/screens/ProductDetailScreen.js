@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Animated,
-  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -17,6 +16,7 @@ import {
 import { colors, spacing } from '../theme';
 import { useCart } from '../context/CartContext';
 import PizzaCard from '../components/PizzaCard';
+import PizzaImage from '../components/PizzaImage';
 
 export default function ProductDetailScreen({ pizza, onBack, onOpenPizza }) {
   const { addPizza } = useCart();
@@ -88,13 +88,15 @@ export default function ProductDetailScreen({ pizza, onBack, onOpenPizza }) {
         </Pressable>
 
         <Animated.View style={{ transform: [{ scale: imgScale }] }}>
-          <Image source={{ uri: pizza.image }} style={styles.heroImg} />
+          <PizzaImage uri={pizza.image} style={styles.heroImg} />
         </Animated.View>
 
         <Text style={styles.name}>{pizza.name}</Text>
         <Text style={styles.meta}>
           ★ {pizza.rating} · {pizza.prepMin} min · {pizza.category}
         </Text>
+
+        <Text style={styles.section}>Description</Text>
         <Text style={styles.desc}>{pizza.description}</Text>
 
         {hasDiscount ? (
@@ -105,6 +107,18 @@ export default function ProductDetailScreen({ pizza, onBack, onOpenPizza }) {
             </Text>
           </View>
         ) : null}
+
+        <Text style={styles.section}>Ingrédients</Text>
+        <Text style={styles.ingList}>
+          {(pizza.ingredients || []).join(' · ')}
+        </Text>
+        <View style={styles.tags}>
+          {pizza.ingredients.map((ing) => (
+            <View key={ing} style={styles.tag}>
+              <Text style={styles.tagText}>{ing}</Text>
+            </View>
+          ))}
+        </View>
 
         <Text style={styles.section}>Taille</Text>
         <View style={styles.sizes}>
@@ -125,15 +139,6 @@ export default function ProductDetailScreen({ pizza, onBack, onOpenPizza }) {
               </Pressable>
             );
           })}
-        </View>
-
-        <Text style={styles.section}>Ingrédients</Text>
-        <View style={styles.tags}>
-          {pizza.ingredients.map((ing) => (
-            <View key={ing} style={styles.tag}>
-              <Text style={styles.tagText}>{ing}</Text>
-            </View>
-          ))}
         </View>
 
         <View style={styles.priceBox}>
@@ -182,7 +187,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 220,
     borderRadius: 20,
-    backgroundColor: colors.bgSoft,
     marginBottom: spacing.md,
   },
   name: {
@@ -199,11 +203,16 @@ const styles = StyleSheet.create({
   },
   desc: {
     color: colors.cream,
-    opacity: 0.85,
-    textAlign: 'center',
-    marginTop: spacing.md,
+    opacity: 0.9,
     fontSize: 15,
     lineHeight: 22,
+  },
+  ingList: {
+    color: colors.accentSoft,
+    fontSize: 14,
+    lineHeight: 21,
+    marginBottom: spacing.sm,
+    fontWeight: '600',
   },
   deal: {
     marginTop: spacing.md,
