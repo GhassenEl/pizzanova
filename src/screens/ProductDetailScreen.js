@@ -1,26 +1,38 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Animated,
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import { SIZES, finalPrice, listPrice } from '../data/menu';
+import {
+  SIZES,
+  finalPrice,
+  listPrice,
+  getRecommendations,
+} from '../data/menu';
 import { colors, spacing } from '../theme';
 import { useCart } from '../context/CartContext';
+import PizzaCard from '../components/PizzaCard';
 
-export default function ProductDetailScreen({ pizza, onBack }) {
+export default function ProductDetailScreen({ pizza, onBack, onOpenPizza }) {
   const { addPizza } = useCart();
   const [sizeId, setSizeId] = useState('M');
   const [added, setAdded] = useState(false);
   const slide = useRef(new Animated.Value(40)).current;
   const opacity = useRef(new Animated.Value(0)).current;
-  const emojiScale = useRef(new Animated.Value(0.6)).current;
+  const imgScale = useRef(new Animated.Value(0.92)).current;
   const btnScale = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
+    opacity.setValue(0);
+    slide.setValue(40);
+    imgScale.setValue(0.92);
+    setSizeId('M');
+    setAdded(false);
     Animated.parallel([
       Animated.timing(opacity, {
         toValue: 1,
@@ -32,18 +44,21 @@ export default function ProductDetailScreen({ pizza, onBack }) {
         friction: 8,
         useNativeDriver: true,
       }),
-      Animated.spring(emojiScale, {
+      Animated.spring(imgScale, {
         toValue: 1,
-        friction: 5,
-        tension: 80,
+        friction: 6,
         useNativeDriver: true,
       }),
     ]).start();
-  }, [opacity, slide, emojiScale]);
+  }, [pizza.id, opacity, slide, imgScale]);
 
   const price = finalPrice(pizza, sizeId);
   const was = listPrice(pizza, sizeId);
   const hasDiscount = pizza.discountPct > 0;
+  const recommendations = useMemo(
+    () => getRecommendations(pizza, 4),
+    [pizza]
+  );
 
   const handleAdd = () => {
     addPizza({ ...pizza, _unitPrice: price }, sizeId, 1);
@@ -65,21 +80,16 @@ export default function ProductDetailScreen({ pizza, onBack }) {
 
   return (
     <Animated.View
-      style={[
-        styles.root,
-        { opacity, transform: [{ translateY: slide }] },
-      ]}
+      style={[styles.root, { opacity, transform: [{ translateY: slide }] }]}
     >
       <ScrollView contentContainerStyle={styles.content}>
         <Pressable onPress={onBack} style={styles.back}>
           <Text style={styles.backText}>← Retour</Text>
         </Pressable>
 
-        <Animated.Text
-          style={[styles.emoji, { transform: [{ scale: emojiScale }] }]}
-        >
-          {pizza.emoji}
-        </Animated.Text>
+        <Animated.View style={{ transform: [{ scale: imgScale }] }}>
+          <Image source={{ uri: pizza.image }} style={styles.heroImg} />
+        </Animated.View>
 
         <Text style={styles.name}>{pizza.name}</Text>
         <Text style={styles.meta}>
@@ -141,6 +151,23 @@ export default function ProductDetailScreen({ pizza, onBack }) {
             </Pressable>
           </Animated.View>
         </View>
+
+        <Text style={styles.section}>Vous aimerez aussi</Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.reco}
+        >
+          {recommendations.map((p, i) => (
+            <PizzaCard
+              key={p.id}
+              pizza={p}
+              index={i}
+              compact
+              onPress={() => onOpenPizza?.(p)}
+            />
+          ))}
+        </ScrollView>
       </ScrollView>
     </Animated.View>
   );
@@ -151,10 +178,12 @@ const styles = StyleSheet.create({
   content: { padding: spacing.lg, paddingBottom: 48 },
   back: { marginBottom: spacing.md },
   backText: { color: colors.accentSoft, fontWeight: '700', fontSize: 15 },
-  emoji: {
-    fontSize: 88,
-    textAlign: 'center',
-    marginVertical: spacing.md,
+  heroImg: {
+    width: '100%',
+    height: 220,
+    borderRadius: 20,
+    backgroundColor: colors.bgSoft,
+    marginBottom: spacing.md,
   },
   name: {
     color: colors.cream,
@@ -246,4 +275,5 @@ const styles = StyleSheet.create({
     borderRadius: 14,
   },
   btnText: { color: colors.white, fontWeight: '800', fontSize: 14 },
+  reco: { paddingBottom: 8 },
 });

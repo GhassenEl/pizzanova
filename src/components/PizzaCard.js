@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import {
   Animated,
+  Image,
   Pressable,
   StyleSheet,
   Text,
@@ -9,7 +10,7 @@ import {
 import { colors, spacing } from '../theme';
 import { finalPrice, listPrice } from '../data/menu';
 
-export default function PizzaCard({ pizza, index = 0, onPress }) {
+export default function PizzaCard({ pizza, index = 0, onPress, compact }) {
   const opacity = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(24)).current;
   const scale = useRef(new Animated.Value(1)).current;
@@ -36,10 +37,35 @@ export default function PizzaCard({ pizza, index = 0, onPress }) {
   const was = listPrice(pizza);
   const hasDiscount = pizza.discountPct > 0;
 
+  if (compact) {
+    return (
+      <Animated.View style={{ opacity, transform: [{ translateY }, { scale }] }}>
+        <Pressable
+          onPress={onPress}
+          style={styles.compact}
+          onPressIn={() =>
+            Animated.spring(scale, { toValue: 0.96, useNativeDriver: true }).start()
+          }
+          onPressOut={() =>
+            Animated.spring(scale, {
+              toValue: 1,
+              friction: 5,
+              useNativeDriver: true,
+            }).start()
+          }
+        >
+          <Image source={{ uri: pizza.image }} style={styles.compactImg} />
+          <Text style={styles.compactName} numberOfLines={1}>
+            {pizza.name}
+          </Text>
+          <Text style={styles.compactPrice}>{price.toFixed(2)} TND</Text>
+        </Pressable>
+      </Animated.View>
+    );
+  }
+
   return (
-    <Animated.View
-      style={{ opacity, transform: [{ translateY }, { scale }] }}
-    >
+    <Animated.View style={{ opacity, transform: [{ translateY }, { scale }] }}>
       <Pressable
         onPressIn={() =>
           Animated.spring(scale, {
@@ -57,9 +83,7 @@ export default function PizzaCard({ pizza, index = 0, onPress }) {
         onPress={onPress}
         style={styles.card}
       >
-        <View style={styles.emojiWrap}>
-          <Text style={styles.emoji}>{pizza.emoji}</Text>
-        </View>
+        <Image source={{ uri: pizza.image }} style={styles.image} />
         <View style={styles.body}>
           <View style={styles.row}>
             <Text style={styles.name} numberOfLines={1}>
@@ -99,22 +123,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: colors.card,
     borderRadius: 18,
-    padding: spacing.md,
+    padding: spacing.sm,
     marginBottom: spacing.sm,
     borderWidth: 1,
     borderColor: 'rgba(255,179,3,0.12)',
   },
-  emojiWrap: {
-    width: 72,
-    height: 72,
-    borderRadius: 16,
-    backgroundColor: colors.bgSoft,
-    alignItems: 'center',
-    justifyContent: 'center',
+  image: {
+    width: 88,
+    height: 88,
+    borderRadius: 14,
     marginRight: spacing.md,
+    backgroundColor: colors.bgSoft,
   },
-  emoji: { fontSize: 36 },
-  body: { flex: 1 },
+  body: { flex: 1, paddingVertical: 4, paddingRight: 4 },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -164,4 +185,29 @@ const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
   },
   meta: { color: colors.gold, fontSize: 13, fontWeight: '600' },
+  compact: {
+    width: 140,
+    marginRight: 12,
+    backgroundColor: colors.card,
+    borderRadius: 16,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: 'rgba(255,179,3,0.12)',
+  },
+  compactImg: { width: '100%', height: 100, backgroundColor: colors.bgSoft },
+  compactName: {
+    color: colors.cream,
+    fontWeight: '700',
+    fontSize: 13,
+    paddingHorizontal: 10,
+    paddingTop: 8,
+  },
+  compactPrice: {
+    color: colors.accentSoft,
+    fontWeight: '800',
+    fontSize: 12,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+    paddingTop: 4,
+  },
 });

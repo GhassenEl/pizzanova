@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import {
   Animated,
+  Image,
   Pressable,
   StyleSheet,
   Text,
@@ -12,7 +13,6 @@ import { getPizza } from '../data/menu';
 export default function PackCard({ pack, index = 0, onAdd }) {
   const opacity = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(0.92)).current;
-  const pulse = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     Animated.parallel([
@@ -29,24 +29,7 @@ export default function PackCard({ pack, index = 0, onAdd }) {
         useNativeDriver: true,
       }),
     ]).start();
-
-    const loop = Animated.loop(
-      Animated.sequence([
-        Animated.timing(pulse, {
-          toValue: 1.04,
-          duration: 900,
-          useNativeDriver: true,
-        }),
-        Animated.timing(pulse, {
-          toValue: 1,
-          duration: 900,
-          useNativeDriver: true,
-        }),
-      ])
-    );
-    loop.start();
-    return () => loop.stop();
-  }, [index, opacity, scale, pulse]);
+  }, [index, opacity, scale]);
 
   const names = pack.pizzas
     .map((id) => getPizza(id)?.name)
@@ -56,28 +39,30 @@ export default function PackCard({ pack, index = 0, onAdd }) {
   return (
     <Animated.View style={{ opacity, transform: [{ scale }] }}>
       <View style={styles.card}>
-        <Animated.Text style={[styles.emoji, { transform: [{ scale: pulse }] }]}>
-          {pack.emoji}
-        </Animated.Text>
-        <View style={styles.header}>
-          <Text style={styles.name}>{pack.name}</Text>
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>-{pack.discountPct}%</Text>
+        <Image source={{ uri: pack.image }} style={styles.image} />
+        <View style={styles.content}>
+          <View style={styles.header}>
+            <Text style={styles.name}>
+              {pack.emoji} {pack.name}
+            </Text>
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>-{pack.discountPct}%</Text>
+            </View>
           </View>
-        </View>
-        <Text style={styles.desc}>{pack.description}</Text>
-        <Text style={styles.names} numberOfLines={2}>
-          {names}
-        </Text>
-        <Text style={styles.drinks}>+ {pack.drinks} boissons</Text>
-        <View style={styles.footer}>
-          <View>
-            <Text style={styles.price}>{pack.price.toFixed(2)} TND</Text>
-            <Text style={styles.was}>{pack.originalPrice.toFixed(2)} TND</Text>
+          <Text style={styles.desc}>{pack.description}</Text>
+          <Text style={styles.names} numberOfLines={2}>
+            {names}
+          </Text>
+          <Text style={styles.drinks}>+ {pack.drinks} boissons</Text>
+          <View style={styles.footer}>
+            <View>
+              <Text style={styles.price}>{pack.price.toFixed(2)} TND</Text>
+              <Text style={styles.was}>{pack.originalPrice.toFixed(2)} TND</Text>
+            </View>
+            <Pressable style={styles.btn} onPress={() => onAdd(pack)}>
+              <Text style={styles.btnText}>Ajouter</Text>
+            </Pressable>
           </View>
-          <Pressable style={styles.btn} onPress={() => onAdd(pack)}>
-            <Text style={styles.btnText}>Ajouter</Text>
-          </Pressable>
         </View>
       </View>
     </Animated.View>
@@ -88,12 +73,13 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.card,
     borderRadius: 20,
-    padding: spacing.lg,
     marginBottom: spacing.md,
     borderWidth: 1,
     borderColor: 'rgba(232,93,4,0.35)',
+    overflow: 'hidden',
   },
-  emoji: { fontSize: 40, marginBottom: 8 },
+  image: { width: '100%', height: 140, backgroundColor: colors.bgSoft },
+  content: { padding: spacing.lg },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -101,8 +87,9 @@ const styles = StyleSheet.create({
   },
   name: {
     color: colors.cream,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '800',
+    flex: 1,
   },
   badge: {
     backgroundColor: colors.danger,

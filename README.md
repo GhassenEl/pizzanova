@@ -4,12 +4,15 @@ Application de vente de pizzas avec catégories, détails produits, remises, pac
 
 ## Fonctionnalités
 
+- **Images réelles** : photos Unsplash pour chaque pizza / pack / offre
 - **Catégories** : Classiques, Spéciales, Végétariennes, Sucrées
 - **Détails produit** : description, ingrédients, tailles S/M/L, prix
-- **Remises** : badges promo, prix barrés, économies affichées
-- **Packs** : Duo, Famille, Party, Vert avec remises jusqu’à 24 %
-- **Panier** : ajout pizzas / packs, total, vider
-- **Animations** : entrée liste, spring cartes, pulse packs, slide détail, toast
+- **Recommandations** : accueil (top notes) + fiche produit (tags / catégorie)
+- **Offres** : MIDI15, LIVRE0, WEEK8, NOVA20
+- **Commande & paiement** : livraison, carte / espèces / wallet, TVA + livraison
+- **Facture** : reçu payé avec détail, historisé dans Mes commandes
+- **Packs** : Duo, Famille, Party, Vert
+- **Animations** : entrée liste, spring, slide, toast
 
 ## Lancer
 
