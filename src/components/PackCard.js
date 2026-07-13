@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import {
   Animated,
-  Image,
   Pressable,
   StyleSheet,
   Text,
@@ -9,6 +8,7 @@ import {
 } from 'react-native';
 import { colors, spacing } from '../theme';
 import { getPizza } from '../data/menu';
+import PizzaImage from './PizzaImage';
 
 export default function PackCard({ pack, index = 0, onAdd }) {
   const opacity = useRef(new Animated.Value(0)).current;
@@ -34,12 +34,12 @@ export default function PackCard({ pack, index = 0, onAdd }) {
   const names = pack.pizzas
     .map((id) => getPizza(id)?.name)
     .filter(Boolean)
-    .join(' · ');
+    .join(', ');
 
   return (
     <Animated.View style={{ opacity, transform: [{ scale }] }}>
       <View style={styles.card}>
-        <Image source={{ uri: pack.image }} style={styles.image} />
+        <PizzaImage uri={pack.image} style={styles.image} />
         <View style={styles.content}>
           <View style={styles.header}>
             <Text style={styles.name}>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(232,93,4,0.35)',
     overflow: 'hidden',
   },
-  image: { width: '100%', height: 140, backgroundColor: colors.bgSoft },
+  image: { width: '100%', height: 140 },
   content: { padding: spacing.lg },
   header: {
     flexDirection: 'row',

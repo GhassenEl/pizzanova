@@ -110,7 +110,7 @@ export default function ProductDetailScreen({ pizza, onBack, onOpenPizza }) {
 
         <Text style={styles.section}>Ingrédients</Text>
         <Text style={styles.ingList}>
-          {(pizza.ingredients || []).join(' · ')}
+          {(pizza.ingredients || []).join(', ')}
         </Text>
         <View style={styles.tags}>
           {pizza.ingredients.map((ing) => (

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import {
   Animated,
-  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -9,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { colors, spacing } from '../theme';
+import PizzaImage from '../components/PizzaImage';
 
 const METHOD_LABEL = {
   card: 'Carte bancaire',
@@ -80,7 +80,7 @@ export default function InvoiceScreen({ invoice, onHome, onOrders }) {
           {invoice.items.map((item) => (
             <View key={item.key} style={styles.item}>
               {item.image ? (
-                <Image source={{ uri: item.image }} style={styles.thumb} />
+                <PizzaImage uri={item.image} style={styles.thumb} />
               ) : null}
               <View style={{ flex: 1 }}>
                 <Text style={styles.itemName}>

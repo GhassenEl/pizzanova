@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import {
   Animated,
-  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -11,6 +10,7 @@ import {
 import { OFFERS } from '../data/menu';
 import { colors, spacing } from '../theme';
 import { useCart } from '../context/CartContext';
+import PizzaImage from '../components/PizzaImage';
 
 export default function OffersScreen({ onBack, onApplied }) {
   const { applyPromo, appliedOffer } = useCart();
@@ -78,7 +78,7 @@ function OfferCard({ offer, index, active, onApply }) {
   return (
     <Animated.View style={{ opacity, transform: [{ scale }] }}>
       <View style={styles.card}>
-        <Image source={{ uri: offer.image }} style={styles.img} />
+        <PizzaImage uri={offer.image} style={styles.img} />
         <View style={styles.body}>
           <View style={[styles.dot, { backgroundColor: offer.color }]} />
           <Text style={styles.name}>{offer.title}</Text>

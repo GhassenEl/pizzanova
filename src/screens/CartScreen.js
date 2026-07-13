@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
-  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -11,6 +10,7 @@ import {
 } from 'react-native';
 import { colors, spacing } from '../theme';
 import { useCart } from '../context/CartContext';
+import PizzaImage from '../components/PizzaImage';
 
 export default function CartScreen({ onBack, onCheckout }) {
   const {
@@ -64,7 +64,7 @@ export default function CartScreen({ onBack, onCheckout }) {
             {items.map((item) => (
               <View key={item.key} style={styles.row}>
                 {item.image ? (
-                  <Image source={{ uri: item.image }} style={styles.thumb} />
+                  <PizzaImage uri={item.image} style={styles.thumb} />
                 ) : (
                   <Text style={styles.emoji}>{item.emoji}</Text>
                 )}
