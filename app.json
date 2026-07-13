@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "PizzaNova",
+    "slug": "pizzanova",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android", "web"],
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": ["**/*"],
+    "plugins": ["expo-asset", "expo-font"]
+  }
+}
